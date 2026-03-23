@@ -1,0 +1,193 @@
+/* ── Github Enchanting Extension ────────────────────────────────────────── */
+
+.github-enchanting-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  vertical-align: middle;
+  /* stay in the same line as the emoji button */
+  flex-shrink: 0;
+}
+
+/* ── Trigger button ── */
+.github-enchanting-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  height: 28px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #57606a;
+  background-color: transparent;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color 80ms ease, border-color 80ms ease, color 80ms ease;
+  user-select: none;
+}
+
+.github-enchanting-trigger:hover {
+  background-color: #f3f4f6;
+  border-color: #9ea7b3;
+  color: #24292f;
+}
+
+.github-enchanting-trigger:active {
+  background-color: #ebecf0;
+  border-color: #9ea7b3;
+}
+
+@media (prefers-color-scheme: dark) {
+  .github-enchanting-trigger {
+    color: #8b949e;
+    border-color: #444c56;
+  }
+  .github-enchanting-trigger:hover {
+    background-color: #30363d;
+    border-color: #6e7681;
+    color: #c9d1d9;
+  }
+  .github-enchanting-trigger:active {
+    background-color: #282e36;
+    border-color: #6e7681;
+  }
+}
+
+/* GitHub's forced dark mode via html[data-color-mode] */
+:root[data-color-mode="dark"] .github-enchanting-trigger,
+html[data-color-mode="dark"] .github-enchanting-trigger {
+  color: #8b949e;
+  border-color: #444c56;
+}
+:root[data-color-mode="dark"] .github-enchanting-trigger:hover,
+html[data-color-mode="dark"] .github-enchanting-trigger:hover {
+  background-color: #30363d;
+  border-color: #6e7681;
+  color: #c9d1d9;
+}
+
+.github-enchanting-caret {
+  opacity: 0.7;
+  transition: transform 120ms ease;
+}
+
+.github-enchanting-trigger[aria-expanded="true"] .github-enchanting-caret {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown menu ── */
+.github-enchanting-menu {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 200;
+  min-width: 210px;
+  padding: 4px 0;
+  background: #ffffff;
+  border: 1px solid rgba(31, 35, 40, 0.15);
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgba(31, 35, 40, 0.06),
+    0 8px 24px rgba(140, 149, 159, 0.20);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.github-enchanting-menu.open {
+  display: block;
+  animation: github-enchanting-fadein 120ms ease;
+}
+
+@keyframes github-enchanting-fadein {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Dark mode menu */
+@media (prefers-color-scheme: dark) {
+  .github-enchanting-menu {
+    background: #161b22;
+    border-color: #30363d;
+    box-shadow:
+      0 0 0 1px rgba(240, 246, 252, 0.1),
+      0 8px 24px rgba(1, 4, 9, 0.6);
+  }
+}
+
+:root[data-color-mode="dark"] .github-enchanting-menu,
+html[data-color-mode="dark"] .github-enchanting-menu {
+  background: #161b22;
+  border-color: #30363d;
+  box-shadow:
+    0 0 0 1px rgba(240, 246, 252, 0.1),
+    0 8px 24px rgba(1, 4, 9, 0.6);
+}
+
+/* ── Menu items ── */
+.github-enchanting-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #24292f;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  transition: background-color 60ms ease;
+}
+
+.github-enchanting-item:hover {
+  background-color: #0969da;
+  color: #ffffff;
+}
+
+.github-enchanting-item:active {
+  background-color: #0550ae;
+  color: #ffffff;
+}
+
+/* Divider before the "ignore" group */
+.github-enchanting-item:nth-child(8) {
+  border-top: 1px solid #d0d7de;
+  margin-top: 4px;
+  padding-top: 9px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .github-enchanting-item {
+    color: #c9d1d9;
+  }
+  .github-enchanting-item:nth-child(8) {
+    border-top-color: #30363d;
+  }
+}
+
+:root[data-color-mode="dark"] .github-enchanting-item,
+html[data-color-mode="dark"] .github-enchanting-item {
+  color: #c9d1d9;
+}
+
+:root[data-color-mode="dark"] .github-enchanting-item:nth-child(8),
+html[data-color-mode="dark"] .github-enchanting-item:nth-child(8) {
+  border-top-color: #30363d;
+}
+
+/* ── PR List page overrides ── */
+.github-enchanting-list-wrapper {
+  margin-left: 8px;
+}
+
+.github-enchanting-list-menu {
+  bottom: auto;
+  top: calc(100% + 6px);
+}
