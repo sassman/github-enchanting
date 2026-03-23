@@ -18,11 +18,19 @@ When viewing a Dependabot pull request, a **Dependabot** dropdown button appears
 
 No copy-pasting command strings — just pick from the menu and it's posted.
 
+<img width="485" height="697" alt="image" src="https://github.com/user-attachments/assets/480ae62d-cf3e-4194-b7db-e57edff94c77" />
+
+---
+
 ### Batch Commands on the PR List Page
 
 Select multiple PRs using GitHub's built-in checkboxes on the pull request list page. A **Dependabot** dropdown appears next to the "X selected" label in the table header. Pick a command and it opens each selected PR in a new tab, automatically posting the chosen command on every Dependabot PR.
 
 Non-Dependabot PRs are silently skipped.
+
+<img width="480" height="579" alt="image" src="https://github.com/user-attachments/assets/1928d38b-c48c-4c66-ba5d-f2ec4485be71" />
+
+---
 
 ## Installation (Local / Developer Mode)
 
