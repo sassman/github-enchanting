@@ -121,13 +121,7 @@ async function postComment(commandText) {
   // Give React a moment to catch up
   await new Promise(r => setTimeout(r, 350));
 
-  // Find the submit button in the new-comment form
-  const submitBtn = document.querySelector(
-    '#new_comment_form button[type="submit"], ' +
-    '.js-new-comment-form button[type="submit"], ' +
-    'button.js-comment-submit-button, ' +
-    '.discussion-timeline-actions button[type="submit"]'
-  );
+  const submitBtn = findCommentSubmitButton();
 
   if (!submitBtn) {
     alert('⚠️ Github Enchanting: Comment pre-filled but could not auto-submit.\nPlease click the "Comment" button to post:\n\n' + commandText);
@@ -135,6 +129,44 @@ async function postComment(commandText) {
   }
 
   submitBtn.click();
+}
+
+function findCommentSubmitButton() {
+  // The comment form may contain multiple submit buttons: "Comment",
+  // "Close pull request", and "Close with comment". We must pick the plain
+  // "Comment" button and never a close variant.
+  const form =
+    document.querySelector('#new_comment_form') ||
+    document.querySelector('.js-new-comment-form') ||
+    document.querySelector('.discussion-timeline-actions');
+
+  const scope = form || document;
+
+  const isCloseButton = (btn) => {
+    const label = (btn.textContent || '').trim().toLowerCase();
+    const name = (btn.getAttribute('name') || '').toLowerCase();
+    const value = (btn.getAttribute('value') || '').toLowerCase();
+    const aria = (btn.getAttribute('aria-label') || '').toLowerCase();
+    return /close/.test(label) || /close/.test(name) || /close/.test(value) || /close/.test(aria);
+  };
+
+  const isCommentButton = (btn) => {
+    if (!btn || isCloseButton(btn)) return false;
+    const label = (btn.textContent || '').trim().toLowerCase();
+    return label === 'comment' || label === 'add comment';
+  };
+
+  // Prefer the classic Comment button by class, but only if it isn't a close variant
+  const classic = scope.querySelector('button.js-comment-submit-button');
+  if (classic && !isCloseButton(classic)) return classic;
+
+  // Otherwise scan submit buttons in the form and pick the plain Comment one
+  const candidates = scope.querySelectorAll('button[type="submit"], button');
+  for (const btn of candidates) {
+    if (isCommentButton(btn)) return btn;
+  }
+
+  return null;
 }
 
 // ─── UI construction ─────────────────────────────────────────────────────────
